@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
 import { ImageInputDTO } from "../business/entities/Image";
+import { ImageBusiness } from "../business/ImageBusiness";
+import { Authenticator } from "../business/services/Authenticator";
+import { IdGenerator } from "../business/services/IdGenerator";
+import { BaseDatabase } from "../data/BaseDatabase";
+import { ImageDatabase } from "../data/ImageDatabase";
 
 export class ImageController {
     async newImage(req: Request, res: Response){
@@ -13,12 +18,21 @@ export class ImageController {
                 collection: req.body.collection
             }
 
-            // await imageBusiness.newImage(input)
+            const imageBusiness = new ImageBusiness (
+                new ImageDatabase,
+                new IdGenerator,
+                new Authenticator
+            )
+
+            await imageBusiness.newImage(input, req.headers.authorization as string)
 
             res.sendStatus(200)
         }
         catch(error){
             res.status(400).send({ message: error.message})
+        }
+        finally {
+            await BaseDatabase.destroyConnection()
         }
     }
 
