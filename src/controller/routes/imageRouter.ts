@@ -5,4 +5,4 @@ export const imageRouter = express.Router();
 
 const imageController = new ImageController();
 
-imageRouter.post("/image", imageController.newImage)
+imageRouter.post("/new", imageController.newImage)

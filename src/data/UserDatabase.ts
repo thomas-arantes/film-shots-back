@@ -24,7 +24,7 @@ export class UserDatabase extends BaseDatabase {
       nickname: string
    ): Promise<void> {
       try {
-         await BaseDatabase.connection
+         await BaseDatabase.getConnection
             .insert({
                id,
                name,
@@ -34,13 +34,13 @@ export class UserDatabase extends BaseDatabase {
             })
             .into(UserDatabase.TABLE_NAME);
       } catch (error) {
-         throw new CustomError(500, "An unexpected error ocurred");
+         throw new Error(error.sqlMessage || error.message);
       }
    }
 
    public async getUserByEmail(email: string): Promise<User> {
       try {
-         const result = await BaseDatabase.connection
+         const result = await BaseDatabase.getConnection
             .select("*")
             .from(UserDatabase.TABLE_NAME)
             .where({ email });
