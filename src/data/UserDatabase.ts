@@ -45,7 +45,18 @@ export class UserDatabase extends BaseDatabase {
             .from(UserDatabase.TABLE_NAME)
             .where({ email });
 
-         return UserDatabase.toUserModel(result[0]);
+         if(!result[0]){
+            throw new Error("User not found")
+         }
+
+         return {
+            id: result[0].id,
+            name: result[0].name,
+            email: result[0].email,
+            nickname: result[0].nickname,
+            password: result[0].password
+        };
+
       } catch (error) {
          throw new CustomError(500, "An unexpected error ocurred");
       }

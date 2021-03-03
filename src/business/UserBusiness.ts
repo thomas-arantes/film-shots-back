@@ -39,6 +39,10 @@ export class UserBusiness {
 
       const userFromDB = await this.userDatabase.getUserByEmail(user.email);
 
+      if(!userFromDB){
+         throw new Error("User not found")
+      }
+
       const passwordIsCorrect = await this.hashManager.compare(
          user.password,
          userFromDB.password
@@ -49,7 +53,10 @@ export class UserBusiness {
       });
 
       if (!passwordIsCorrect) {
+         console.log(userFromDB.password)
+         console.log(user.password)
          throw new CustomError(401, "Invalid credentials!");
+   
       }
 
       return accessToken;
