@@ -12,7 +12,7 @@ export class ImageDatabase extends BaseDatabase {
                 id: image.getId(),
                 subtitle: image.getSubtitle(),
                 author: image.getAuthor(),
-                date: image.getDate(),
+                date: Date.now(),
                 file: image.getFile(),
                 tags: image.getTags(),
                 collection: image.getCollection()
