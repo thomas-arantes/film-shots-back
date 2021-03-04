@@ -2,6 +2,7 @@ import { CustomError } from "./error/CustomError";
 import { Authenticator } from "./services/Authenticator";
 import { IdGenerator } from "./services/IdGenerator"
 import { tags } from "./entities/Tags"
+import { TagsDatabase } from "../data/TagsDatabase";
 
 export class TagsBusiness {
     async create(name: string, token: string): Promise<void> {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TagsBusiness } from "../business/CategoryBusiness";
+import { TagsBusiness } from "../business/TagsBusiness";
 
 export class TagsController {
 
